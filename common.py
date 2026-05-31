@@ -19,7 +19,6 @@ class Transcript:
     def sample(self) -> bytes:
         raise NotImplementedError("subclass responsibility")
 
-
 class Sha3_256Transcript(Transcript):
     def __init__(self, initialization_bytes: bytes):
         """Creates a new SHA3-256 hasher. Initializes it with `initialization_bytes`"""
@@ -40,6 +39,11 @@ class Sha3_256Transcript(Transcript):
         self.hasher = sha3_256()
         self.hasher.update(result)
         return result
+
+    def copy(self):
+        new_transcript = Sha3_256Transcript(b'')
+        new_transcript.hasher = self.hasher.copy()
+        return new_transcript
 
 
 class Equation:
